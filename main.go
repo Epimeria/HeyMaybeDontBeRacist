@@ -53,10 +53,20 @@ func main() {
 		"WatchRedditDie",
 		"JusticeServed",
 		"WinStupidPrizes",
+		"UnpopularOpinion",
 		"FuckThesePeople",
 		"KotakuInAction",
+		"MakeMeSuffer",
+		"gaming",
+		"Holup",
+		"fightPorn",
+		"PublicFreakout",
+		"ActualPublicFreakouts",
 		"tumblrInAction",
+		"instantKarma",
 		"iamatotalpieceofshit",
+		"whitePeopleTwitter",
+		"blackPeopleTwitter",
 	}
 
 	bot, err := reddit.NewBotFromAgentFile("bot.agent", 5*time.Second)
