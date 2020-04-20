@@ -25,7 +25,7 @@ type CommentHandler interface {
 }
 
 func (a *announcer) Comment(comment *reddit.Comment) error {
-	matched, _ := regexp.MatchString(`(13\%?\:?\;?\/? ?50\%?)( |$|\.|\,)`, comment.Body)
+	matched, _ := regexp.MatchString(`(13\%?\:?\;?\/? ?50\%?)( |$|\.|\,|\:|\;|\-)`, comment.Body)
 	if matched {
 		fmt.Printf("%s was a little racist on %s: '%s'\n", comment.Author, comment.Subreddit, comment.Body)
 		return a.bot.Reply(comment.Name, copyPasta)
