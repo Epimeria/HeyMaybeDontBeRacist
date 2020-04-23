@@ -1,3 +1,4 @@
+// Version 1.00
 package main
 
 import (
@@ -25,8 +26,9 @@ type CommentHandler interface {
 }
 
 func (a *announcer) Comment(comment *reddit.Comment) error {
-	matched, _ := regexp.MatchString(`(13\%?\:?\;?\/? ?50\%?)( |$|\.|\,|\: |\;|\-)`, comment.Body)
-	if matched {
+	matched, _ := regexp.MatchString(`(13\%?\:?\;?\/? ?5(0|2)\%?)( |$|\.|\,|\: |\;|\-)`, comment.Body)
+	negativeMatch, _ := regexp.MatchString(`(youtu\.be)|(youtube\.com)`, comment.Body)
+	if matched && !negativeMatch {
 		fmt.Printf("%s was a little racist on %s: '%s'\n", comment.Author, comment.Subreddit, comment.Body)
 		return a.bot.Reply(comment.Name, copyPasta)
 	}
@@ -35,38 +37,37 @@ func (a *announcer) Comment(comment *reddit.Comment) error {
 }
 
 func main() {
-	// Limiting the scope to right-wing subs, or subs that right-wingers tend to be active on (No particular order)
-	naughtySubs := []string{
-		"Politics",
-		"PoliticalHumor",
-		"News",
-		"WorldNews",
-		"PoliticalCompassMemes",
-		"The_Donald",
-		"askThe_Donald",
+	subsToMonitor := []string{
+		"ActualPublicFreakouts",
+		"AskThe_Donald",
 		"Conservative",
 		"Conspiracy",
-		"SargonOfAkkad",
-		"PewdiePieSubmissions",
-		"Politic",
-		"PussyPassDenied",
-		"WatchRedditDie",
-		"JusticeServed",
-		"WinStupidPrizes",
-		"UnpopularOpinion",
+		"FightPorn",
 		"FuckThesePeople",
+		"Gaming",
+		"Holup",
+		"Iamatotalpieceofshit",
+		"InstantKarma",
+		"JusticeServed",
 		"KotakuInAction",
 		"MakeMeSuffer",
-		"gaming",
-		"Holup",
-		"fightPorn",
+		"News",
+		"PewdiePieSubmissions",
+		"Politic",
+		"PoliticalCompassMemes",
+		"PoliticalHumor",
+		"Politics",
 		"PublicFreakout",
-		"ActualPublicFreakouts",
-		"tumblrInAction",
-		"instantKarma",
-		"iamatotalpieceofshit",
-		"whitePeopleTwitter",
-		"blackPeopleTwitter",
+		"PussyPassDenied",
+		"SargonOfAkkad",
+		"The_Donald",
+		"Trashy",
+		"TumblrInAction",
+		"UnpopularOpinion",
+		"WatchRedditDie",
+		"WhitePeopleTwitter",
+		"WinStupidPrizes",
+		"WorldNews",
 	}
 
 	bot, err := reddit.NewBotFromAgentFile("bot.agent", 5*time.Second)
@@ -74,7 +75,7 @@ func main() {
 		log.Fatal(err)
 	}
 	cfg := graw.Config{
-		SubredditComments: naughtySubs,
+		SubredditComments: subsToMonitor,
 	}
 
 	fmt.Println("Bot started")
