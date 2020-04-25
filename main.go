@@ -56,7 +56,6 @@ func main() {
 		"Politic",
 		"PoliticalCompassMemes",
 		"PoliticalHumor",
-		"Politics",
 		"PublicFreakout",
 		"PussyPassDenied",
 		"SargonOfAkkad",
