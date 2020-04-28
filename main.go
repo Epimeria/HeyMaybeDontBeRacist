@@ -1,4 +1,4 @@
-// Version 1.03
+// Version 1.04
 package main
 
 import (
@@ -26,7 +26,7 @@ type CommentHandler interface {
 }
 
 func (a *announcer) Comment(comment *reddit.Comment) error {
-	matched, _ := regexp.MatchString(`((13\%?\:?\;?\/? ?5(0|2)\%?)( |$|\.|\,|\: |\;|\-))|(Despite$)|(Despite making up (only)? ?13\%?)`, comment.Body)
+	matched, _ := regexp.MatchString(`((13\%?\:?\;?\/? ?5(0|2)\%?)( |$|\.|\,|\: |\;|\-))|(Despite$)|(Despite (only )?making up (only )?13\%?)`, comment.Body)
 	negativeMatch, _ := regexp.MatchString(`((youtu\.be)|(youtube\.com))|(dogwhistle|dog whistle)|(racist|racism)`, comment.Body)
 	if matched && !negativeMatch {
 		fmt.Printf("%s was a little racist on %s: '%s'\n", comment.Author, comment.Subreddit, comment.Body)
